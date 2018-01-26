@@ -17,11 +17,7 @@ defmodule PropCheck.Test.MovieServer do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
 
   def stop() do
-    ref = Process.monitor(__MODULE__)
-    GenServer.call(__MODULE__, :stop)
-    receive do
-      {:DOWN, ^ref, :process, _object, _reason} -> :ok
-    end
+    GenServer.stop(__MODULE__)
   end
 
   @spec create_account(name) :: password
