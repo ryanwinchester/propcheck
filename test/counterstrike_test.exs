@@ -1,5 +1,4 @@
 defmodule PropCheck.Test.CounterStrikeTest do
-
   use ExUnit.Case
   use PropCheck
   require Logger
@@ -7,7 +6,7 @@ defmodule PropCheck.Test.CounterStrikeTest do
   alias PropCheck.CounterStrike
 
   setup do
-    IO.puts "This is a setup callback for #{inspect self()}"
+    IO.puts("This is a setup callback for #{inspect(self())}")
     filename = "counterstrike_test.#{System.unique_integer([:positive, :monotonic])}.dets"
     path = Path.join(Mix.Project.build_path(), filename)
     File.rm(path)
@@ -43,7 +42,8 @@ defmodule PropCheck.Test.CounterStrikeTest do
 
   @tag will_fail: true
   property "often_failing" do
-    Logger.debug "Lets ask counter_strike: #{CounterStrike.counter_example({:a, :b, []})}"
+    Logger.debug("Lets ask counter_strike: #{CounterStrike.counter_example({:a, :b, []})}")
+
     forall l <- list(integer()) do
       l == List.reverse(l)
     end
@@ -59,10 +59,12 @@ defmodule PropCheck.Test.CounterStrikeTest do
       use ExUnit.Case
       use PropCheck
 
-      @tag :skip # will be run manually
+      # will be run manually
+      @tag :skip
       property "cant_generate" do
         # Check that no counterexample is stored if PropEr reported an error
-        gen = such_that b <- false, when: b
+        gen = such_that(b <- false, when: b)
+
         forall b <- gen do
           b
         end
